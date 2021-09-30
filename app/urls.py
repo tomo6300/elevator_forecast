@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from .views import FloorViewSet
 
 app_name = 'app'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('api/floors/', FloorViewSet, name='floor'),
 ]
