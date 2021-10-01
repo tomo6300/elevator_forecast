@@ -158,6 +158,8 @@ def main(sum_in_elevator_, number_of_persons, distribution, now, direction_, eps
 import random
 import time
 
+waiting_up, waiting_down, up_persons, down_persons = [], [], [], []
+
 #max_per_floorは各階で待っている人数の最大値、intervalは計算を実行する時間間隔。グローバル変数を絶えず更新するのでフロント側でグローバル変数用意してください
 def simulate(distribution, eps, max_number, hight, time_to_move, time_to_stop, interval, max_per_floor):
     while (True):
