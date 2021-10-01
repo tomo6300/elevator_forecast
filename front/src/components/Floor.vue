@@ -1,20 +1,20 @@
 <template>
   <v-app class="body">
     <v-app-bar app>
-      2階
+      {{this.floorNum}}階
     </v-app-bar>
     <v-main class="main">
       <v-container class="container">
         <div class="sec1">
           <div>
             <h3>上り</h3>
-            <p>待ち時間：約{{waiting_up}}秒</p>
-            <p>予想混雑度：混んでいる（約{{up_persons}}人）</p>
+            <p>待ち時間：約{{waitingUp}}秒</p>
+            <p>予想混雑度：<span v-bind:class="{ crowded: isCrowdedUp }">{{congestedStateUp}}</span>（約{{upPersons}}人）</p>
           </div>
           <div>
             <h3>下り</h3>
-            <p>待ち時間：約{{waiting_down}}秒</p>
-            <p>予想混雑度：空いている（約{{down_persons}}人）</p>
+            <p>待ち時間：約{{waitingDown}}秒</p>
+            <p>予想混雑度：<span v-bind:class="{ crowded: isCrowdedDown }">{{congestedStateDown}}</span>（約{{downPersons}}人）</p>
           </div>
         </div>
         <div class="sec2">
@@ -36,10 +36,13 @@
   export default {
     data () {
       return {
-        waiting_up: 130,
-        waiting_down: 20,
-        up_persons: 5,
-        down_persons: 1,
+        height: 6,
+        maxNumber: 5,
+        floorNum: 1,
+        waitingUp: 130,
+        waitingDown: 20,
+        upPersons: 5,
+        downPersons: 1,
         headers: [
           { text: '1階', value: 'one' },
           { text: '2階', value: 'two' },
@@ -62,11 +65,29 @@
         ],
       }
     },
+    computed: {
+      threshold: function () {
+        return this.maxNumber - 2;
+      },
+      isCrowdedUp: function () {
+        return this.upPersons >= this.threshold;
+      },
+      isCrowdedDown: function () {
+        return this.downPersons >= this.threshold;
+      },
+      congestedStateUp: function () {
+        return this.upPersons >= this.threshold ? "混んでいる" : "空いている";
+      },
+      congestedStateDown: function () {
+        return this.downPersons >= this.threshold ? "混んでいる" : "空いている";
+      }
+    },
     mounted: function() {
       this.$vuetify.application.bottom = 0;
       // 1秒ごとにhelloをコンソールに出す処理を書く
+      this.floorNum = this.$route.params.floorNum;
       const cb = () => {
-        fetch(`/api/floors/1`)
+        fetch(`/api/floors/${this.floorNum}`)
           .then(response => {
             console.log(response.status); 
             // エラーレスポンスが返されたことを検知する
@@ -77,10 +98,10 @@
             response.json()
               .then(resJson => {
                 console.log(resJson);
-                this.waiting_up = resJson.waiting_up;
-                this.waiting_down = resJson.waiting_down;
-                this.up_persons = resJson.up_persons;
-                this.down_persons = resJson.down_persons;
+                this.waitingUp = resJson.waiting_up;
+                this.waitingDown = resJson.waiting_down;
+                this.upPersons = resJson.up_persons;
+                this.downPersons = resJson.down_persons;
               });
           }).catch(error => {
             console.error(error);
@@ -118,5 +139,8 @@
   height: 200px;
   min-height: 200px;
   bottom: 0;
+}
+.crowded {
+  color: red;
 }
 </style>

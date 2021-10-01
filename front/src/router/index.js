@@ -6,11 +6,15 @@ Vue.use(Router);
 
 const routes = [
   {
-    path: '/',
+    path: '/floors/:floorNum',
     name: 'django-elevator',
     components: {
       default: Floor,
     }
+  },
+  {
+    path: '*',
+    redirect: '/floors/1'
   }
 ]
 
