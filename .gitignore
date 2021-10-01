@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,django,node,vuejs
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django,node,vuejs
 
+.DS_Store
+*/.DS_Store
+
 ### Django ###
 *.log
 *.pot
@@ -345,4 +348,4 @@ dist
 npm-debug.log
 yarn-error.log
 
-# End of https://www.toptal.com/developers/gitignore/api/python,django,node,vuejs
+# End of https://www.toptal.com/developers/gitignore/api/python,django,node,vuejs.DS_Store
