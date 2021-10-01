@@ -337,6 +337,11 @@ dist
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
+# others
+*.swp
+!.gitkeep
+.DS_Store
+
 npm-debug.log
 yarn-error.log
 
