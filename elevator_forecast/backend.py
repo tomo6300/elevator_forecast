@@ -1,3 +1,8 @@
+import sys
+sys.path.append('..')
+
+from elevator_forecast import backend
+
 def calculate_sum(sequence, start, end):
     Sum=0.0
     for i in range(start, end):
@@ -161,10 +166,13 @@ def main(sum_in_elevator_, number_of_persons, distribution, now, direction_, eps
 import random
 import time
 
+# Global variables
 waiting_up, waiting_down, up_persons, down_persons = [], [], [], []
+# Private variables
+distribution, eps, max_number, hight, time_to_move, time_to_stop, interval, max_per_floor = [0, 1, 2 ,1 ,2 ,1 ,2], 0.1, 5, 6, 10, 10, 1, 10
 
 #max_per_floorは各階で待っている人数の最大値、intervalは計算を実行する時間間隔。グローバル変数を絶えず更新するのでフロント側でグローバル変数用意してください
-def simulate(distribution, eps, max_number, hight, time_to_move, time_to_stop, interval, max_per_floor):
+def simulate():
     while (True):
         sum_in_elevator = random.randint(0, max_number)
         number_of_persons = [0]*(hight+1)
@@ -172,5 +180,8 @@ def simulate(distribution, eps, max_number, hight, time_to_move, time_to_stop, i
             number_of_persons[i] = random.randint(0, max_per_floor)
         now = random.randint(2, hight*2)
         direction=random.randint(0, 1)*2-1
-        waiting_up, waiting_down, up_persons, down_persons = main(sum_in_elevator, number_of_persons, distribution, now, direction, eps, max_number, hight, time_to_move, time_to_stop)
+        backend.waiting_up, backend.waiting_down, backend.up_persons, backend.down_persons = main(sum_in_elevator, number_of_persons, distribution, now, direction, eps, max_number, hight, time_to_move, time_to_stop)
         time.sleep(interval)
+
+def set_config(distribution, eps, max_number, hight, time_to_move, time_to_stop, interval, max_per_floor):
+    backend.distribution, backend.eps, backend.max_number, backend.hight, backend.time_to_move, backend.time_to_stop, backend.interval, backend.max_per_floor = distribution, eps, max_number, hight, time_to_move, time_to_stop, interval, max_per_floor
