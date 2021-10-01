@@ -61,7 +61,7 @@ def calculate_ride_up(number_of_persons, distribution,eps, hight):
         ride_up[floor] = ride_per_floor(number_of_persons[floor], distribution, floor+1, hight+1, eps, hight)
     return ride_up
 
-def calculate_ride_down(number_of_persons, distribution,eps, hight):
+def calculate_ride_down(number_of_persons, distribution, eps, hight):
     ride_down = [0]*(hight+1)
     for floor in range(1, hight+1):
         ride_down[floor] = ride_per_floor(number_of_persons[floor], distribution, 1, floor-1, eps, hight)
@@ -157,3 +157,20 @@ def main(sum_in_elevator_, number_of_persons, distribution, now, direction_, eps
         if (stop_time_sum==2*hight):
             break
     return waiting_up, waiting_down, up_persons, down_persons
+
+import random
+import time
+
+waiting_up, waiting_down, up_persons, down_persons = [], [], [], []
+
+#max_per_floorは各階で待っている人数の最大値、intervalは計算を実行する時間間隔。グローバル変数を絶えず更新するのでフロント側でグローバル変数用意してください
+def simulate(distribution, eps, max_number, hight, time_to_move, time_to_stop, interval, max_per_floor):
+    while (True):
+        sum_in_elevator = random.randint(0, max_number)
+        number_of_persons = [0]*(hight+1)
+        for i in range(1, hight+1):
+            number_of_persons[i] = random.randint(0, max_per_floor)
+        now = random.randint(2, hight*2)
+        direction=random.randint(0, 1)*2-1
+        waiting_up, waiting_down, up_persons, down_persons = main(sum_in_elevator, number_of_persons, distribution, now, direction, eps, max_number, hight, time_to_move, time_to_stop)
+        time.sleep(interval)
