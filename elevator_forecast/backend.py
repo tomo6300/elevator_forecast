@@ -44,7 +44,7 @@ def clouded(getoff, distribution, max_number, start, end, hight):
     return getoff
 
 #各階でエレベーターに乗りたい人数を予測する
-def ride_per_floor(number_on_floor, distribution, start, end, eps):
+def ride_per_floor(number_on_floor, distribution, start, end, eps, hight):
     Sum = calculate_sum(distribution, start, end)
     All = calculate_sum(distribution, 1, hight+1)
     ride = Sum*number_on_floor/All
@@ -55,13 +55,13 @@ def ride_per_floor(number_on_floor, distribution, start, end, eps):
 def calculate_ride_up(number_of_persons, distribution,eps, hight):
     ride_up = [0]*(hight+1)
     for floor in range(1, hight+1):
-        ride_up[floor] = ride_per_floor(number_of_persons[floor], distribution, floor+1, hight+1, eps)
+        ride_up[floor] = ride_per_floor(number_of_persons[floor], distribution, floor+1, hight+1, eps, hight)
     return ride_up
 
-def calculate_ride_down(number_of_persons, distribution,eps, hight):
+def calculate_ride_down(number_of_persons, distribution, eps, hight):
     ride_down = [0]*(hight+1)
     for floor in range(1, hight+1):
-        ride_down[floor] = ride_per_floor(number_of_persons[floor], distribution, 1, floor-1, eps)
+        ride_down[floor] = ride_per_floor(number_of_persons[floor], distribution, 1, floor-1, eps, hight)
     return ride_down
 
 def should_stop(floor, ride, getoff, eps):
