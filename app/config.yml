@@ -4,3 +4,5 @@ time_to_stop: 10      #各階に停止する秒数
 max_number: 5        #定員（人）
 eps: 0.1  #0.1以下は切り捨て
 distribution: [0, 1, 2 ,1 ,2 ,1 ,2] #各階に降りる人数の比は1:2:1:2:1:2
+interval: 1
+max_per_floor: 10

@@ -27,5 +27,36 @@ paths:
                   down_persons:
                     type: int
                     example: 5
-      
-      
+  /api/configs:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hight:
+                    type: int
+                    example: 6
+                  time_to_move:
+                    type: int
+                    example: 10
+                  time_to_stop:
+                    type: int
+                    example: 10
+                  max_number:
+                    type: int
+                    example: 5
+                  eps:
+                    type: float
+                    example: 0.1
+                  distribution:
+                    type: array
+                    example: [0, 1, 2 ,1 ,2 ,1 ,2]
+                  interval:
+                    type: int
+                    example: 1
+                  max_per_floor:
+                    type: int
+                    example: 10
