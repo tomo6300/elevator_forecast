@@ -1,0 +1,31 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/floors/<int:pk>:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  floor:
+                    type: int
+                    example: 1
+                  waiting_up:
+                    type: int
+                    example: 120
+                  waiting_down:
+                    type: int
+                    example: 120
+                  up_persons:
+                    type: int
+                    example: 5
+                  down_persons:
+                    type: int
+                    example: 5
+      
+      
