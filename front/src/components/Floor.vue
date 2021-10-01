@@ -64,6 +64,29 @@
     },
     mounted: function() {
       this.$vuetify.application.bottom = 0;
+      // 1秒ごとにhelloをコンソールに出す処理を書く
+      const cb = () => {
+        fetch(`/api/floors/1`)
+          .then(response => {
+            console.log(response.status); 
+            // エラーレスポンスが返されたことを検知する
+            if (!response.ok) {
+              console.error("エラーレスポンス", response);
+              return;
+            }
+            response.json()
+              .then(resJson => {
+                console.log(resJson);
+                this.waiting_up = resJson.waiting_up;
+                this.waiting_down = resJson.waiting_down;
+                this.up_persons = resJson.up_persons;
+                this.down_persons = resJson.down_persons;
+              });
+          }).catch(error => {
+            console.error(error);
+          });
+      };
+      window.setInterval(cb, 1000);
     },
   }
 </script>
